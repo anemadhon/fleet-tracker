@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - '1883:1883'
+      - '9001:9001'
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    networks:
+      - fleet-network
+    command: mosquitto -c /mosquitto-no-auth.conf
+
+  postgres:
+    image: postgis/postgis:15-3.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fleetuser
+      POSTGRES_PASSWORD: fleetpass
+      POSTGRES_DB: fleet
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/init-sql:/docker-entrypoint-initdb.d:ro
+    ports:
+      - '5433:5432'
+    networks:
+      - fleet-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - '5673:5672'
+      - '15673:15672'
+    networks:
+      - fleet-network
+
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    restart: on-failure
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+    ports:
+      - '8093:8093'
+    networks:
+      - fleet-network
+
+  subscriber:
+    build:
+      context: .
+      dockerfile: services/subscriber/Dockerfile
+    restart: on-failure
+    env_file:
+      - ./.env
+    depends_on:
+      - mosquitto
+      - postgres
+      - rabbitmq
+    networks:
+      - fleet-network
+
+  worker:
+    build:
+      context: .
+      dockerfile: services/worker/Dockerfile
+    restart: on-failure
+    env_file:
+      - ./.env
+    depends_on:
+      - rabbitmq
+      - postgres
+    networks:
+      - fleet-network
+
+  publisher:
+    build:
+      context: .
+      dockerfile: services/publisher/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    depends_on:
+      - mosquitto
+    networks:
+      - fleet-network
+
+volumes:
+  pgdata:
+  redisdata:
+  mosquitto_data:
+  mosquitto_logs:
+
+networks:
+  fleet-network:
+    driver: bridge
