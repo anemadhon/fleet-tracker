@@ -1,0 +1,201 @@
+# Fleet Tracker - Git Ignore
+
+# ==============================================================================
+# Go specific
+# ==============================================================================
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+go.work
+
+# Dependency directories
+vendor/
+
+# ==============================================================================
+# Environment & Configuration (CRITICAL - SECURITY!)
+# ==============================================================================
+.env
+.env.local
+.env.*.local
+*.local
+
+# Config files with credentials
+config.local.yml
+credentials.json
+
+# ==============================================================================
+# IDE & Editors
+# ==============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# GoLand / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ==============================================================================
+# OS specific
+# ==============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================================================================
+# Database
+# ==============================================================================
+# Database backup files
+*.sql
+backup_*.sql
+*.dump
+dump.rdb
+
+# SQLite databases (if used for testing)
+*.db
+*.sqlite
+*.sqlite3
+
+# PostgreSQL
+pgdata/
+
+# ==============================================================================
+# Docker (if mounting volumes)
+# ==============================================================================
+# Docker volumes data (if mounted locally)
+/data/
+/volumes/
+
+# ==============================================================================
+# Logs
+# ==============================================================================
+*.log
+logs/
+/tmp/
+*.pid
+*.seed
+*.pid.lock
+
+# ==============================================================================
+# Build artifacts
+# ==============================================================================
+/bin/
+/build/
+/dist/
+/out/
+
+# Compiled service binaries
+subscriber
+api-service
+worker
+publisher
+seed
+
+# ==============================================================================
+# Testing
+# ==============================================================================
+# Test cache
+.cache/
+testdata/
+coverage.txt
+coverage.out
+coverage.html
+
+# ==============================================================================
+# Temporary files
+# ==============================================================================
+*.tmp
+*.temp
+.temp/
+*.bak
+*.swp
+
+# ==============================================================================
+# Migration tools
+# ==============================================================================
+# Don't ignore migration files themselves, but ignore migration tool cache
+.migrate/
+
+# ==============================================================================
+# Documentation
+# ==============================================================================
+# Generated docs (if using godoc or similar)
+/docs/generated/
+site/
+
+# ==============================================================================
+# Certificates & Keys (CRITICAL - SECURITY!)
+# ==============================================================================
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# ==============================================================================
+# Misc
+# ==============================================================================
+.tool-versions
+.envrc
+.direnv/
+
+# Air (live reload tool)
+tmp/
+.air.toml
+
+# GoReleaser
+dist/
+*.tar.gz
+*.zip
+
+mosquitto
