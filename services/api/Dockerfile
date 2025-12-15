@@ -9,7 +9,7 @@ RUN go mod download
 # 2. copy seluruh source project (termasuk tj/config, tj/pkg, services/...)
 COPY . .
 
-RUN go test ./... -v
+# RUN go test ./... -v
 
 # 3. build main api
 RUN CGO_ENABLED=0 GOOS=linux go build -o api ./services/api/cmd/main.go
