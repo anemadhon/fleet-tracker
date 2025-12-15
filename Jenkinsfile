@@ -53,7 +53,7 @@ pipeline {
                             -w /app ^
                             -e CGO_ENABLED=0 ^
                             -e GO111MODULE=on ^
-                            golang:1.21 ^
+                            golang:1.24 ^
                             sh -c "go mod tidy && go test ./... -v"
                     '''
                 }
