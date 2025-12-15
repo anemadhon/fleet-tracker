@@ -37,8 +37,9 @@ pipeline {
         }
         stage('Start Services') {
             steps {
-                bat 'docker-compose up -d postgres rabbitmq mosquitto'
-                bat 'timeout /t 10 /nobreak' // Wait 10 seconds
+                bat 'docker-compose up -d'
+                // bat 'docker-compose up -d postgres rabbitmq mosquitto'
+                // bat 'timeout /t 10 /nobreak' // Wait 10 seconds
             }
         }
         stage('Run Tests') {
@@ -61,7 +62,7 @@ pipeline {
         stage('Build & Start All Services') {
             steps {
                 bat 'docker-compose up -d'
-                bat 'timeout /t 5 /nobreak'
+                // bat 'timeout /t 5 /nobreak'
             }
         }
         stage('Health Check') {
