@@ -42,23 +42,23 @@ pipeline {
                 // bat 'timeout /t 10 /nobreak' // Wait 10 seconds
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
-                    // Run tests inside a temporary Go container
-                    bat '''
-                        docker run --rm ^
-                            --network %COMPOSE_PROJECT_NAME%_fleet-network ^
-                            -v %cd%:/app ^
-                            -w /app ^
-                            -e CGO_ENABLED=0 ^
-                            -e GO111MODULE=on ^
-                            golang:1.24 ^
-                            sh -c "go mod tidy && go test ./... -v"
-                    '''
-                }
-            }
-        }
+        // stage('Run Tests') {
+        //     steps {
+        //         script {
+        //             // Run tests inside a temporary Go container
+        //             bat '''
+        //                 docker run --rm ^
+        //                     --network %COMPOSE_PROJECT_NAME%_fleet-network ^
+        //                     -v %cd%:/app ^
+        //                     -w /app ^
+        //                     -e CGO_ENABLED=0 ^
+        //                     -e GO111MODULE=on ^
+        //                     golang:1.24 ^
+        //                     sh -c "go mod tidy && go test ./... -v"
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Build & Start All Services') {
             steps {
                 bat 'docker-compose up -d'

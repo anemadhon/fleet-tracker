@@ -9,6 +9,8 @@ RUN go mod download
 # 2. copy seluruh source project (termasuk tj/config, tj/pkg, services/...)
 COPY . .
 
+RUN go test ./... -v
+
 # 3. build main publisher
 RUN CGO_ENABLED=0 GOOS=linux go build -o publisher ./services/publisher/cmd/main.go
 
